@@ -1,0 +1,42 @@
+#!/bin/bash
+
+mkdir -p /docker/mysql
+mkdir -p /docker/app_downloader
+mkdir -p /docker/phpfpm
+mkdir -p /docker/nginx
+
+cp mysql_Dockerfile /docker/mysql/Dockerfile
+cp mysql_startdb.sh /docker/mysql/startdb.sh
+
+
+cp app_downloader_Dockerfile /docker/app_downloader/Dockerfile
+cp app_downloader_run.sh /docker/app_downloader/run.sh
+
+
+cp phpfpm_Dockerfile /docker/phpfpm/Dockerfile
+cp phpfpm_run.sh /docker/phpfpm/run.sh
+cp php-fpm.conf /docker/phpfpm/config
+cp www.conf /docker/phpfpm/config
+
+
+
+cp -p nginx.conf /docker/nginx/config
+cp -p default.conf /docker/nginx/config
+cp nginx_Dockerfile /docker/nginx/Dockerfile
+
+
+
+cd /docker/mysql
+docker build -t docker_mysql . 
+
+cd /docker/app_downloader
+docker build -t docker_app_downloader .
+
+cd /docker/phpfpm
+docker build -t docker_phpfpm .
+
+cd /docker/nginx
+docker build -t docker_nginx .
+
+
+

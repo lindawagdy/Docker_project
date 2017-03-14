@@ -1,0 +1,10 @@
+
+#!/bin/bash
+
+docker run -d  --name mysql docker_mysql
+
+docker run -i -t  --name downloader docker_app_downloader
+
+docker run -d  --name app1 --volumes-from downloader --link mysql:db docker_phpfpm
+
+docker run -d -p 8090:80 --name nginx --volumes-from downloader --link app1:app1 docker_nginx
